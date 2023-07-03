@@ -65,14 +65,11 @@ fn main() {
 
         loop {
             let mut input = String::new();
-            let mut buffer: Vec<u8> = Vec::new();
-
             stdin()
                 .read_line(&mut input)
                 .expect("Failed to read from stdin");
 
             let parts: Vec<&str> = input.trim_matches('\n').split(',').collect();
-
             let point = Point3D {
                 x: parts[0].parse().unwrap(),
                 y: parts[1].parse().unwrap(),
@@ -84,6 +81,7 @@ fn main() {
                 .expect("Failed to write to server");
             stream.write_all(b"\n").expect("Failed to write to server");
 
+            let mut buffer: Vec<u8> = Vec::new();
             let mut reader = BufReader::new(&stream);
             reader
                 .read_until(b'\n', &mut buffer)
